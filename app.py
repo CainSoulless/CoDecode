@@ -2,15 +2,20 @@
 from flask import Flask, redirect, render_template, request, session
 from flask_session import Session
 from tempfile import mkdtemp
+import jyserver.Flask as jsf
 
 # Security
-from werkzeug.security import check_password_hash, generate_password_hash
+from werkzeug.security import check_password_hash
+from werkzeug.security import generate_password_hash
 
 # SQLITE3
 import sqlite3
 
 # helpers
 from helpers import login_required
+
+# script.py allocated it static folder
+from static.python.script import encrypt
 
 app = Flask(__name__)
 
@@ -24,6 +29,20 @@ db.row_factory = sqlite3.Row
 cursor = db.cursor()
 
 
+"""
+Jyserver block, modifying the DOM with Python.
+"""
+@jsf.use(app)
+class App:
+    def __init__(self):
+        self.message = ""
+        self.output = ""
+        
+    
+    def input_message(self):
+        self.js.document.getElementById("message").innerHTML = self.message
+        self.output = encrypt(self.message)
+
 
 @app.after_request
 def after_request(response):
@@ -32,12 +51,6 @@ def after_request(response):
     response.headers["Expires"] = 0
     response.headers["Pragma"] = "no-cache"
     return response
-
-
-@app.route("/", methods=["GET"])
-def index():
-    if request.method == "GET":
-        return render_template("/index.html")
 
 
 @app.route("/register", methods=["POST"])
@@ -56,14 +69,23 @@ def register():
         return render_template("home.html")
 
 
-@app.route("/", methods=["POST", "GET"])
+@app.route("/")
 @login_required
 def home():
-    return render_template("home.html")
+    encrypt_options = [
+        "base64",
+        "SHA-256"
+    ] 
+    # return render_template("home.html")
+    return App.render(render_template("home.html", options=encrypt_options))
 
 
-@app.route("/login", methods=["POST"])
+@app.route("/login", methods=["GET", "POST"])
 def login():
+
+    # Forget any user id
+    session.clear()
+
     if request.method == "POST":
         username = request.form.get("username")
         password = request.form.get("password")
@@ -78,13 +100,18 @@ def login():
             return "Invalid username or password"
 
         session["user_id"] = row["id"]
-        return render_template("home.html")
 
+        return redirect("/")
+
+    else:
+        return render_template("portal.html")
+    
 
 @app.route("/logout", methods=["GET"])
+@login_required
 def logout():
     session.clear()
-    return render_template("index.html")
+    return render_template("portal.html")
 
 
 if __name__ == "__main__":

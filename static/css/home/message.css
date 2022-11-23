@@ -1,7 +1,3 @@
-.message__container {
-    margin: 5% 3%;
-}
-
 .message__textarea {
     border: none;
     outline: none;
@@ -12,4 +8,10 @@
     font-weight: 500;
     font-size: 2rem;
     padding: 1rem;
+}
+
+.message__options {
+    width: 40rem;
+    height: 30rem;
+    background-color: green;
 }

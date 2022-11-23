@@ -5,16 +5,37 @@
 {% endblock%}
 
 {% block style %}
-    <link href="static/home/navbar__layout.css" rel="stylesheet">
-    <link href="static/presentation/presentation.css" rel="stylesheet">
-    <link href="static/home/message.css" rel="stylesheet">
+    <link href="static/css/home/navbar__layout.css" rel="stylesheet">
+    <link href="static/css/presentation/presentation.css" rel="stylesheet">
+    <link href="static/css/home/message.css" rel="stylesheet">
+    <link href="static/css/home/home.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 {% endblock%}
 
 {% block main %}
 
-    <div class="message__container">
-        <div class="form-group">
-            <textarea class="message__textarea" rows="5" id="message" name="message" placeholder="Message"></textarea>
+    <div class=container__home>
+        <div class="message__container">
+            <div class="form-group">
+                <textarea class="message__textarea" rows="5" id="message" name="message" placeholder="Message"></textarea>
+            </div> 
         </div> 
-    </div> 
+
+        <div class="message__options">
+            <select class="form-select" aria-label="Default select example" name="option">
+                <option disabled selected>Options</option>
+                {% for option in options %}
+                    <option value={{ option }}>{{ option }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="message__container">
+            <div class="form-group">
+                <textarea class="message__textarea message__textarea__output" rows="5" id="output" name="output" placeholder="Output"></textarea>
+            </div> 
+        </div> 
+    </div>
+    
+
 {% endblock%}
