@@ -22,12 +22,13 @@
         </div> 
 
         <div class="message__options">
-            <select class="form-select" aria-label="Default select example" name="option">
-                <option disabled selected>Options</option>
+            <select class="w-50 form-select form-select-lg mb-3 message__options--option" aria-label=".form-select-lg example" name="option">
+                <option disabled selected>Choose an option:</option>
                 {% for option in options %}
                     <option value={{ option }}>{{ option }}</option>
                 {% endfor %}
             </select>
+            <buttom></buttom>
         </div>
 
         <div class="message__container">

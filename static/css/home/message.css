@@ -15,3 +15,7 @@
     height: 30rem;
     background-color: green;
 }
+
+.message__options--option {
+    font-family: "Roboto", sans-serif;
+}
