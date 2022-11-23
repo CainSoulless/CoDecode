@@ -3,6 +3,14 @@
 }
 
 .account__title {
-    margin-top: 10%;
+    margin-top: 18%;
 } 
 
+.account__username__class {
+    width: 50%;
+    background-color: red;
+}
+
+.w-50 {
+    width: 25%;
+}

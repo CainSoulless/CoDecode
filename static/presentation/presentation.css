@@ -15,7 +15,7 @@
     background: radial-gradient(73.01% 125.16% at 43.98% 10.28%, rgba(0, 0, 0, 0.3) 0%, rgba(254, 229, 217, 0.3) 35.66%, rgba(10, 11, 56, 0.3) 88.41%) /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */, radial-gradient(106.92% 132.11% at 106.92% -16.67%, #FEDFD0 0%, #FF7955 75.12%, #2665F9 100%) /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */;
     background-clip: text;
     background-blend-mode: color-dodge, normal;
-    text-fill-color: transparent;
+    /* text-fill-color: transparent; */
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     font-weight: 900;
@@ -30,7 +30,7 @@
 }
  .presentation__dev {
     color: #9996A0;
-    margin-top: 13rem;
+    margin-top: 38rem;
     font-size: 1.6rem;
     font-weight: 900;
  }

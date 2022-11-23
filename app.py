@@ -24,6 +24,7 @@ db.row_factory = sqlite3.Row
 cursor = db.cursor()
 
 
+
 @app.after_request
 def after_request(response):
     """Ensure responses aren't cached"""
@@ -52,7 +53,6 @@ def register():
         
         cursor.execute("INSERT INTO users (username, hash) VALUES (?, ?);", (username, generate_password_hash(password)))
         db.commit()
-        
         return render_template("home.html")
 
 
@@ -78,14 +78,12 @@ def login():
             return "Invalid username or password"
 
         session["user_id"] = row["id"]
-
         return render_template("home.html")
 
 
 @app.route("/logout", methods=["GET"])
 def logout():
     session.clear()
-
     return render_template("index.html")
 
 

@@ -5,14 +5,14 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="static/reset.css" rel="stylesheet">
-        <link href="static/style.css" rel="stylesheet">
         <link href="static/container__right.css" rel="stylesheet">
         <link href="static/container__left.css" rel="stylesheet">
         <link href="static/presentation/presentation.css" rel="stylesheet">
-        <!-- <link href="static/account/account.css" rel="stylesheet"> -->
+        <link href="static/presentation/presentation__rigth.css" rel="stylesheet">
         <link href="static/account/account__create.css" rel="stylesheet">
         <link href="static/account/account__temp.css" rel="stylesheet">
         <link href="static/account/account__login.css" rel="stylesheet">
+        <link href="static/style.css" rel="stylesheet">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
         <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -28,46 +28,47 @@
                 </div>
             </div>  
             <div class="container__right">
-                <div class="account__login">
-                    <form class="form-inline" action="/login" method="post">
-                        <div class="form-group">
-                            <input type="text" class="form-control" id="username" name="username" autofocus placeholder="Username">
-                        </div>
-                        <div class="form-group">
-                            <input type="password" class="form-control" id="pwd" name="password" placeholder="Passoword">
-                        </div>
-                        <div class="form-inline account__checkbox">
-                            <div class="checkbox">
-                                <label class="account__checkbox"><input type="checkbox"> Remember me</label>
+                <div class="presentation__right">
+                    <div class="account__login">
+                        <form class="form-inline" action="/login" method="post">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="username" name="username" autofocus placeholder="Username">
                             </div>
-                            <button type="submit" class="btn btn-default account__checkbox--btn">Login</button>    
+                            <div class="form-group">
+                                <input type="password" class="form-control" id="pwd" name="password" placeholder="Passoword">
+                            </div>
+                            <div class="form-inline account__checkbox">
+                                <div class="checkbox">
+                                    <label class="account__checkbox"><input type="checkbox"> Remember me</label>
+                                </div>
+                                <button type="submit" class="btn btn-default account__checkbox--btn">Login</button>    
+                            </div>
+                        </form> 
+                    </div>
+                    <div class="account__create">
+                        <h3 class="account__title">Create new account.</h3> 
+                        <form class="account__form "  action="/register" method="post">
+                            <div class="w-50 account__create form-group">
+                                <label for="username">Username:</label>
+                                <input class="account__username__class form-control w-50" autocomplete="off" type="text" name="username" id="username" placeholder="Username">
+                            </div>
+                            <div class="w-50 account__password form-group">
+                                <label for="password">Password:</label>
+                                <input class="w-50 account__password__class form-control " autocomplete="off" type="password" name="password" id="password" placeholder="Password">
+                            </div>
+                            <button class="account__submit btn btn-default" type="submit">Register</button>
+                        </form>   
+                    </div>
+                     
+                    <div class="account__temp hrdivider">
+                        <hr/>
+                        <span>or</span>
+                        <div class="account__generate">
+                            <h3 class="account__temp--usage">Use temporal email address.</h3> 
+                            <form action="/generate" method="get">
+                                <button class="account__submit btn btn-default" type="submit">Generate</button>
+                            </form>
                         </div>
-                    </form> 
-                </div>
-                <div class="account__create">
-                    <h3 class="account__title">Create new account.</h3> 
-                    <form class="account__form" action="/register" method="post">
-                        <div class="account__create form-group">
-                            <label for="username">Username:</label>
-                            <input class="account__username__class form-control" autocomplete="off" type="text" name="username" id="username" placeholder="Username">
-                        </div>
-                        <div class="account__password form-group">
-                            <label for="password">Password:</label>
-                            <input class="account__password__class form-control" autocomplete="off" type="password" name="password" id="password" placeholder="Password">
-                        </div>
-                            <!-- <p>Or <a action="/login" method="get">login here.</a></p> -->
-                        <button class="account__submit btn btn-default" type="submit">Register</button>
-                    </form>   
-                </div>
-                 
-                <div class="account__temp hrdivider">
-                    <hr/>
-                    <span>or</span>
-                    <div class="account__generate">
-                        <h3 class="account__temp--usage">Use temporal email address.</h3> 
-                        <form action="/generate" method="get">
-                            <button class="account__submit btn btn-default" type="submit">Generate</button>
-                        </form>
                     </div>
                 </div>
             </div>

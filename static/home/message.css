@@ -1,5 +1,5 @@
 .message__container {
-    margin: 0 3%;
+    margin: 5% 3%;
 }
 
 .message__textarea {
@@ -10,6 +10,6 @@
     height: 30rem;
     background-color: red;
     font-weight: 500;
-    font-size: 3rem;
+    font-size: 2rem;
     padding: 1rem;
 }
