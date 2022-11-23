@@ -1,0 +1,15 @@
+.message__container {
+    margin: 0 3%;
+}
+
+.message__textarea {
+    border: none;
+    outline: none;
+    resize: none;
+    width: 40rem;
+    height: 30rem;
+    background-color: red;
+    font-weight: 500;
+    font-size: 3rem;
+    padding: 1rem;
+}

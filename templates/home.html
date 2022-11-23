@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Home
+{% endblock%}
+
+{% block style %}
+    <link href="static/home/navbar__layout.css" rel="stylesheet">
+    <link href="static/presentation/presentation.css" rel="stylesheet">
+    <link href="static/home/message.css" rel="stylesheet">
+{% endblock%}
+
+{% block main %}
+
+    <div class="message__container">
+        <div class="form-group">
+            <textarea class="message__textarea" rows="5" id="message" name="message" placeholder="Message"></textarea>
+        </div> 
+    </div> 
+{% endblock%}

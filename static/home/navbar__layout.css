@@ -1,0 +1,27 @@
+.navbar__layout {
+    background-color: #242424;
+}
+
+.navbar-brand {
+    margin-top: 2rem;
+    margin-right: 2rem;
+}
+    
+nav .navbar__nav li a{
+    margin-right: 2rem;
+    color: #9996A0;
+    text-decoration: none;
+    font-family: "Roboto", sans-serif;
+    font-weight: 500;
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+}
+
+.navbar__nav {
+    display: flex;
+    margin-top: 1.5rem;
+}
+.navbar__logout {
+    position: relative;
+    padding-left: 90rem;
+}

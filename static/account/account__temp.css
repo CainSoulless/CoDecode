@@ -1,0 +1,28 @@
+.account__generate{
+    /* margin-left: 17%; */
+    /* margin-top: 15%; */
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.account__dotted {
+    border-top: 2px dotted #999;
+}
+
+.hrdivider {
+  position: relative;
+  margin-bottom: 20px;
+  width: 100%;
+  text-align: center;
+}
+
+.hrdivider span {
+  position: absolute;
+  top: -12px;
+  background: #fff;
+  padding: 0 20px;
+  font-weight: bold;
+  font-size: 16px;
+}
