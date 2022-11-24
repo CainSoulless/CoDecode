@@ -1,4 +1,4 @@
-.message__textarea {
+.message__output {
     border: none;
     outline: none;
     resize: none;
@@ -10,12 +10,16 @@
     padding: 1rem;
 }
 
-.message__options {
-    width: 40rem;
-    height: 30rem;
-    background-color: green;
+.message__buttons {
+    display: flex;
+    align-items: left;
+    gap: 2rem;
 }
 
-.message__options--option {
-    font-family: "Roboto", sans-serif;
+.message__textarea {
+    height: 25rem !important;
+}
+
+.btn-dark {
+    background-color: #242424 !important;
 }

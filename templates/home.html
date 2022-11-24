@@ -15,27 +15,49 @@
 {% block main %}
 
     <div class=container__home>
+        <form class="w-25">
+            <div class="form-group">
+                <label for="destination">Email address</label>
+                <input type="email" class="form-control" id="destination" placeholder="name@example.com">
+            </div>
+            <div class="form-group">
+                <label for="subject">Subject</label>
+                <input type="text" class="form-control" id="subject" placeholder="Title">
+            </div>
+            
+            <div class="form-group">
+                <label for="exampleFormControlSelect2">Select encode option:</label>
+                <select multiple class="form-control" id="exampleFormControlSelect2">
+                    {% for option in options %}
+                        <option value={{ option }}>{{ option }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="exampleFormControlTextarea1">Message body:</label>
+                <textarea class="message__textarea form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Text here..."></textarea>
+            </div>
+            <div class="message__buttons">
+                <button type="button" class="btn btn-dark">Submit</button>
+                <button type="button" class="btn btn-secondary">Check output</button>
+            </div>
+        </form>
         <div class="message__container">
             <div class="form-group">
-                <textarea class="message__textarea" rows="5" id="message" name="message" placeholder="Message"></textarea>
+                <textarea class="message__output" rows="5" id="message" name="message" placeholder="Message"></textarea>
             </div> 
         </div> 
 
-        <div class="message__options">
-            <select class="w-50 form-select form-select-lg mb-3 message__options--option" aria-label=".form-select-lg example" name="option">
-                <option disabled selected>Choose an option:</option>
-                {% for option in options %}
-                    <option value={{ option }}>{{ option }}</option>
-                {% endfor %}
-            </select>
-            <buttom></buttom>
+        <!-- <div class="message__options"> -->
+        <!--     <select class="w-50 form-select form-select-lg mb-3 message__options--option" aria-label=".form-select-lg example" name="option"> -->
+        <!--         <option disabled selected>Choose an option:</option> -->
+        <!--         {% for option in options %} -->
+        <!--             <option value={{ option }}>{{ option }}</option> -->
+        <!--         {% endfor %} -->
+        <!--     </select> -->
+        <!--     <buttom></buttom> -->
         </div>
-
-        <div class="message__container">
-            <div class="form-group">
-                <textarea class="message__textarea message__textarea__output" rows="5" id="output" name="output" placeholder="Output"></textarea>
-            </div> 
-        </div> 
     </div>
     
 
