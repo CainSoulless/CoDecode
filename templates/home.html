@@ -16,49 +16,49 @@
 
     <div class=container__home>
         <form class="w-25">
+
+            <!-- Email address -->
             <div class="form-group">
                 <label for="destination">Email address</label>
                 <input type="email" class="form-control" id="destination" placeholder="name@example.com">
             </div>
+
+            <!-- Subject -->
             <div class="form-group">
                 <label for="subject">Subject</label>
                 <input type="text" class="form-control" id="subject" placeholder="Title">
             </div>
             
+            <!-- Options -->
             <div class="form-group">
-                <label for="exampleFormControlSelect2">Select encode option:</label>
-                <select multiple class="form-control" id="exampleFormControlSelect2">
+                <label for="encode-option">Select encode option:</label>
+                <select multiple class="form-control" id="encode-options">
                     {% for option in options %}
-                        <option value={{ option }}>{{ option }}</option>
+                        <option value={{ option }} id="encode-option">{{ option }}</option>
                     {% endfor %}
                 </select>
             </div>
 
+            <!-- Body -->
             <div class="form-group">
-                <label for="exampleFormControlTextarea1">Message body:</label>
-                <textarea class="message__textarea form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Text here..."></textarea>
+                <label for="body">Message body:</label>
+                <textarea class="message__textarea form-control" id="body" rows="3" placeholder="Text here..."></textarea>
             </div>
+
+            <!-- Buttons -->
             <div class="message__buttons">
                 <button type="button" class="btn btn-dark">Submit</button>
-                <button type="button" class="btn btn-secondary">Check output</button>
+                <button type="button" class="btn btn-secondary" onclick="messageEncode()">Check output</button>
             </div>
         </form>
-        <div class="message__container">
-            <div class="form-group">
-                <textarea class="message__output" rows="5" id="message" name="message" placeholder="Message"></textarea>
-            </div> 
-        </div> 
 
-        <!-- <div class="message__options"> -->
-        <!--     <select class="w-50 form-select form-select-lg mb-3 message__options--option" aria-label=".form-select-lg example" name="option"> -->
-        <!--         <option disabled selected>Choose an option:</option> -->
-        <!--         {% for option in options %} -->
-        <!--             <option value={{ option }}>{{ option }}</option> -->
-        <!--         {% endfor %} -->
-        <!--     </select> -->
-        <!--     <buttom></buttom> -->
+        <!-- Output -->
+        <div class="message__container">
+            <div class="mb-3  w-50">
+                <label for="message_output" class="form-label">Message visualization:</label>
+                <textarea class="form-control message__output" id="message_output" rows="3" disabled readonly></textarea>
+            </div>
         </div>
     </div>
-    
-
+    <script type="text/javascript" src="static/js/script.js"></script>
 {% endblock%}

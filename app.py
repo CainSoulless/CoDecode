@@ -73,6 +73,7 @@ def register():
 @login_required
 def home():
     encrypt_options = [
+        "text plain",
         "base64",
         "SHA-256"
     ] 
