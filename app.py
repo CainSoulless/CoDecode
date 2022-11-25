@@ -14,8 +14,6 @@ import sqlite3
 # helpers
 from helpers import login_required
 
-# script.py allocated it static folder
-from static.python.script import encrypt
 
 app = Flask(__name__)
 
@@ -27,21 +25,6 @@ Session(app)
 db = sqlite3.connect("database.db", check_same_thread=False)
 db.row_factory = sqlite3.Row
 cursor = db.cursor()
-
-
-"""
-Jyserver block, modifying the DOM with Python.
-"""
-@jsf.use(app)
-class App:
-    def __init__(self):
-        self.message = ""
-        self.output = ""
-        
-    
-    def input_message(self):
-        self.js.document.getElementById("message").innerHTML = self.message
-        self.output = encrypt(self.message)
 
 
 @app.after_request
@@ -73,12 +56,12 @@ def register():
 @login_required
 def home():
     encrypt_options = [
-        "text plain",
+        "Plain text",
         "base64",
         "SHA-256"
     ] 
-    # return render_template("home.html")
-    return App.render(render_template("home.html", options=encrypt_options))
+    return render_template("home.html", options=encrypt_options)
+    # return App.render(render_template("home.html", options=encrypt_options))
 
 
 @app.route("/login", methods=["GET", "POST"])

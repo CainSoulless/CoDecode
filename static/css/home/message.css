@@ -1,6 +1,6 @@
 .message__output {
     height: 30rem !important;
-    margin-right: 50rem;
+    width: 50rem !important;
     cursor: default !important;
     background-color: white !important;
 }

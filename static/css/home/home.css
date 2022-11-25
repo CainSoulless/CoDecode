@@ -1,5 +1,7 @@
 .container__home {
     display: flex;
-    justify-content: space-between;
-    margin: 5% 3%;
+    justify-content: center;
+    margin-top: 3rem;
+    width: 100% !important;
+    gap: 5rem;
 }

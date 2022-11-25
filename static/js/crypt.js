@@ -11,6 +11,7 @@ function messageEncode() {
     // Getting selected option
     if (encodeOption == "base64") {
         output = btoa(body);
+        console.log(atob(output));
     }
     else if (encodeOption == "SHA-256") {
         output = window.crypto.getRandomValues(new Uint8Array(10));
