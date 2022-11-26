@@ -1,5 +1,4 @@
-cryptography
 flask
 flask_session
 tempfile
-jyserver
+pycryptodome

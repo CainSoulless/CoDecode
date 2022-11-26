@@ -1,6 +1,7 @@
 """
 Autor: Rodrigo Hormazabal (aka CainSoulless)
 """
+
 # Flask
 from flask import Flask
 from flask import redirect
@@ -35,17 +36,6 @@ db = sqlite3.connect("database.db", check_same_thread=False)
 db.row_factory = sqlite3.Row
 cursor = db.cursor()
 
-# @app.route("/")
-# def testing():
-#     if request.is_json:
-#         body = request.args.get("message_body")
-#         print()
-#         print(body)
-#         print()
-#         return jsonify({'body': body})
-
-#     return render_template("home.html")
-
 
 @app.after_request
 def after_request(response):
@@ -54,6 +44,39 @@ def after_request(response):
     response.headers["Expires"] = 0
     response.headers["Pragma"] = "no-cache"
     return response
+
+
+@app.route("/")
+@login_required
+def home():
+    """
+    Render the home page where the user can send and/or encode the message.
+    """
+    encoders_options = [
+        "Plain text",
+        "base64",
+        "SHA-256",
+        "AES_EAX"
+    ] 
+
+    if request.is_json:
+        body = request.args.get("message_body")
+        encode_option = request.args.get("encode_option")
+        output = body
+        print()
+        print(body)
+        print(encode_option)
+        print()
+
+        if encode_option == "base64":
+            output = encoders.enc_base64(body)
+        elif encode_option == "AES_EAX":
+            nonce, output, tag = encoders.enc_AES_EAX(body)
+        # elif encode_option == "Plain":
+        #     output = body
+        return jsonify({'output': output})
+
+    return render_template("home.html", options=encoders_options)
 
 
 @app.route("/register", methods=["POST"])
@@ -75,33 +98,6 @@ def register():
         db.commit()
         return render_template("home.html")
 
-
-@app.route("/")
-@login_required
-def home():
-    """
-    Render the home page where the user can send and/or encode the message.
-    """
-    if request.is_json:
-        body = request.args.get("message_body")
-        encode_option = request.args.get("encode_option")
-        print()
-        print(body)
-        print(encode_option)
-        print()
-
-        if encode_option == "base64":
-            output = encoders.enc_base64(body)
-        return jsonify({'output': output})
-
-    encoders_options = [
-        "Plain text",
-        "base64",
-        "SHA-256",
-        "AES_EBC"
-    ] 
-    return render_template("home.html", options=encoders_options)
-    # return App.render(render_template("home.html", options=encrypt_options))
 
 
 @app.route("/login", methods=["GET", "POST"])
