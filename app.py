@@ -12,8 +12,10 @@ from werkzeug.security import generate_password_hash
 import sqlite3
 
 # helpers
-from helpers import login_required
+from static.python.helpers import login_required
 
+# Testing
+import base64
 
 app = Flask(__name__)
 
