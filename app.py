@@ -52,6 +52,9 @@ def home():
     """
     Render the home page where the user can send and/or encode the message.
     """
+    cursor.execute("SELECT username FROM users WHERE id = ?;", (session["user_id"],))
+    current_user = cursor.fetchone()
+
     encoders_options = [
         "Plain text",
         "base64",
@@ -63,20 +66,15 @@ def home():
         body = request.args.get("message_body")
         encode_option = request.args.get("encode_option")
         output = body
-        print()
-        print(body)
-        print(encode_option)
-        print()
 
         if encode_option == "base64":
             output = encoders.enc_base64(body)
         elif encode_option == "AES_EAX":
             nonce, output, tag = encoders.enc_AES_EAX(body)
-        # elif encode_option == "Plain":
-        #     output = body
+
         return jsonify({'output': output})
 
-    return render_template("home.html", options=encoders_options)
+    return render_template("home.html", options=encoders_options, current_user=current_user["username"])
 
 
 @app.route("/register", methods=["POST"])

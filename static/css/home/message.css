@@ -1,14 +1,22 @@
+.message__container {
+    width: 25%;
+}
+
+.message__output--title {
+    width: 11rem;
+}
+
 .message__output {
-    height: 30rem !important;
-    width: 50rem !important;
-    cursor: default !important;
     background-color: white !important;
+    cursor: default !important;
+    height: 30rem !important;
+    width: 100%!important;
 }
 
 .message__buttons {
     display: flex;
-    align-items: left;
-    gap: 2rem;
+    gap: 5%;
+    margin-top: 1rem;
 }
 
 .message__textarea {
