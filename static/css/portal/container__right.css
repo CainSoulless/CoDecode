@@ -1,0 +1,23 @@
+.container__right {
+    width: 50%;
+}
+
+/* .container__right::before {
+    content: "";
+    background: url("../../img/shot.png") 0 0 no-repeat;
+    background-position: bottom right;
+    transform: rotate(30deg);
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    z-index: -1;
+    -webkit-clip-path: inset(0% 0% 0% 0% round 5%);;
+    clip-path: inset(0% 0% 0% 0% round 5%); */
+
+/* } */
+/* .presentation__right--bg {
+    width: 50%;
+    height: auto;
+    background-image: url("../../img/shot.png");
+    z-index: 1;
+} */

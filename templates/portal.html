@@ -5,13 +5,13 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="static/css/reset.css" rel="stylesheet">
-        <link href="static/css/container__right.css" rel="stylesheet">
-        <link href="static/css/container__left.css" rel="stylesheet">
-        <link href="static/css/presentation/presentation.css" rel="stylesheet">
-        <link href="static/css/presentation/presentation__rigth.css" rel="stylesheet">
-        <link href="static/css/account/account__create.css" rel="stylesheet">
-        <link href="static/css/account/account__temp.css" rel="stylesheet">
-        <link href="static/css/account/account__login.css" rel="stylesheet">
+        <link href="static/css/portal/container__right.css" rel="stylesheet">
+        <link href="static/css/portal/container__left.css" rel="stylesheet">
+        <link href="static/css/portal/presentation/presentation.css" rel="stylesheet">
+        <link href="static/css/portal/presentation/presentation__right.css" rel="stylesheet">
+        <link href="static/css/portal/account/account__create.css" rel="stylesheet">
+        <link href="static/css/portal/account/account__temp.css" rel="stylesheet">
+        <link href="static/css/portal/account/account__login.css" rel="stylesheet">
         <link href="static/css/style.css" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
         <!-- Bootstrap -->
@@ -26,22 +26,27 @@
                     <h2 class="presentation__sub">email more secure</h2>
                     <p class="presentation__dev">Dev. CainSoulless</p>
                 </div>
-            </div>  
+            </div>
             <div class="container__right">
+                <div class="presentation__right--bg"></div>
                 <div class="presentation__right">
                     <div class="account__login">
                         <form class="form-inline" action="/login" method="post">
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="username" name="username" autofocus placeholder="Username">
+                            <h3 class="account__login--title">Login.</h3> 
+                            <div class="account__login--form w-100">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="username" name="username" autofocus placeholder="Username">
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" class="form-control" id="pwd" name="password" placeholder="Passoword">
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <input type="password" class="form-control" id="pwd" name="password" placeholder="Passoword">
-                            </div>
+                                
                             <div class="form-inline account__checkbox">
                                 <div class="checkbox">
                                     <label class="account__checkbox"><input type="checkbox"> Remember me</label>
                                 </div>
-                                <button type="submit" class="btn btn-default account__checkbox--btn">Login</button>    
+                                <button type="submit" class="btn btn-light account__checkbox--btn">Login</button>    
                             </div>
                         </form> 
                     </div>
@@ -56,7 +61,7 @@
                                 <label for="password">Password:</label>
                                 <input class="w-50 account__password__class form-control " autocomplete="off" type="password" name="password" id="password" placeholder="Password">
                             </div>
-                            <button class="account__submit btn btn-default" type="submit">Register</button>
+                            <button class="account__submit btn btn-light" type="submit">Register</button>
                         </form>   
                     </div>
                      
@@ -66,7 +71,7 @@
                         <div class="account__generate">
                             <h3 class="account__temp--usage">Use temporal email address.</h3> 
                             <form action="/generate" method="get">
-                                <button class="account__submit btn btn-default" type="submit">Generate</button>
+                                <button class="account__submit btn btn-light" type="submit">Generate</button>
                             </form>
                         </div>
                     </div>

@@ -1,10 +1,24 @@
 .navbar__layout {
+    padding-left: 2rem;
+    display: flex;
+    align-items: center;
     background-color: #242424;
 }
 
+.navbar__nav {
+    display: flex;
+    font-size: 300;
+    margin-top: 1.5rem;
+}
+
+.navbar__logged-as {
+    display: flex;
+    align-items: center;
+    color: #0d6efd;
+}
+/* 
 .navbar-brand {
-    margin-top: 2rem;
-    margin-right: 2rem;
+    margin: 2rem;
 }
     
 nav .navbar__nav li a{
@@ -17,11 +31,5 @@ nav .navbar__nav li a{
     letter-spacing: 2px;
 }
 
-.navbar__nav {
-    display: flex;
-    margin-top: 1.5rem;
-}
-.navbar__logout {
-    position: relative;
-    padding-left: 80rem;
-}
+
+*/
