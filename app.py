@@ -4,10 +4,10 @@ Autor: Rodrigo Hormazabal (aka CainSoulless)
 
 # Flask
 from flask import Flask
+from flask import jsonify
 from flask import redirect
 from flask import render_template
 from flask import request 
-from flask import jsonify
 from flask import session
 from flask_session import Session
 from tempfile import mkdtemp
@@ -24,6 +24,8 @@ from static.python.helpers import login_required
 
 # Encoders
 import static.python.encoders as encoders
+
+import ast
 
 app = Flask(__name__)
 
@@ -53,7 +55,7 @@ def home():
     Render the home page where the user can send and/or encode the message.
     """
     cursor.execute("SELECT username FROM users WHERE id = ?;", (session["user_id"],))
-    current_user = cursor.fetchone()
+    username = cursor.fetchone()
 
     encoders_options = [
         "Plain text",
@@ -62,19 +64,41 @@ def home():
         "AES_EAX"
     ] 
 
+
+    return render_template("home.html", options=encoders_options, username=username["username"])
+
+
+@app.route("/key-generator", methods=["GET"])
+def key_generator():
+    """
+    Receive an ajax object from handler.js, then generate a random key and
+    send it to the front-end without needes of refresh the web-page.
+    """
     if request.is_json:
-        body = request.args.get("message_body")
-        encode_option = request.args.get("encode_option")
-        output = body
+        key_generator = encoders.get_random_bytes(32);
+        key_generator = encoders.base64.b64encode(key_generator)
+        return jsonify({'key_generator': key_generator.decode("utf-8")})
 
-        if encode_option == "base64":
-            output = encoders.enc_base64(body)
-        elif encode_option == "AES_EAX":
-            nonce, output, tag = encoders.enc_AES_EAX(body)
 
-        return jsonify({'output': output})
+@app.route("/output-visualization", methods=["POST"])
+def output_visualization():
+    """
+    This is the request an render ajax object sended from Jquery, receive the body and the
+    encode option, them render to home.
+    """
+    if request.is_json:
+        if request.method == "POST":
+            json_object = ast.literal_eval(request.data.decode("utf-8"))
+            message_body = json_object.get("message_body")
+            encode_option = json_object.get("encode_option")
 
-    return render_template("home.html", options=encoders_options, current_user=current_user["username"])
+            if encode_option == "base64":
+                output = encoders.enc_base64(message_body)
+            elif encode_option == "AES_EAX":
+                nonce, output, tag = encoders.enc_AES_EAX(message_body)
+
+            return jsonify({'output': output})
+    return redirect("/home")
 
 
 @app.route("/register", methods=["POST"])

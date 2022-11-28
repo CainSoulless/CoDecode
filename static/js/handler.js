@@ -1,17 +1,38 @@
 $(document).ready(function() {
 
-    $("#btn-output").click(function() {
+    function outputVisualization() {
         $.ajax( {
-            url: "",
-            type: "GET",
+            url: "/output-visualization",
+            type: "POST",
             contentType: "application/json",
-            data: {
+            data: JSON.stringify({
                 message_body: $("#body").val(),
                 encode_option: $("#encode-options option:selected").val()
-            },
+            }),
             success: function(response) {
                 $("#message_output").text(response.output)
             }
         })
+    }
+
+    function keyGenerator() {
+        $.ajax( {
+            url: "/key-generator",
+            type: "GET",
+            contentType: "application/json",
+
+            success: function(response) {
+                $("#key").val(response.key_generator)
+            }
+        })
+    }
+
+
+    $("#btn-output").click(function() {
+        outputVisualization();
+    })
+
+    $("#btn-generator").click(function() {
+        keyGenerator();
     })
 })

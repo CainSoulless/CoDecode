@@ -35,7 +35,7 @@
                 <label for="encode-option">Select encode option:</label>
                 <select multiple class="form-control" id="encode-options">
                     {% for option in options %}
-                        <option value={{ option }} id="encode-option">{{ option }}</option>
+                        <option value={{ option }} name="encode-option" id="encode-option">{{ option }}</option>
                     {% endfor %}
                 </select>
             </div>

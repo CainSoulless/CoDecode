@@ -10,6 +10,7 @@ document.getElementById('encode-options').addEventListener("click", function() {
         document.getElementById("btn-generator").removeAttribute("disabled");
     } else {
         document.getElementById("key").setAttribute("disabled", "");
+        document.getElementById("key").value =  "";
         document.getElementById("btn-generator").setAttribute("disabled", "");
     }
 
