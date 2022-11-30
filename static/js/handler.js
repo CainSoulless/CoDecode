@@ -27,6 +27,26 @@ $(document).ready(function() {
         })
     }
 
+    function sendEmail() {
+        $.ajax( {
+            url: "/send-email",
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({
+                to_addr: $("#to_addr").val(),
+                subject: $("#subject").val(),
+                encode_option: $("#encode-options option:selected").val(),
+                key: $("#key").val(),
+                message_body: $("#body").val()
+
+            }),
+        });
+    }
+
+    $("#btn-send").click(function() {
+        sendEmail();
+    })
+
 
     $("#btn-output").click(function() {
         outputVisualization();

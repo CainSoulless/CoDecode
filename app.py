@@ -25,7 +25,11 @@ from static.python.helpers import login_required
 # Encoders
 import static.python.encoders as encoders
 
+# AST
 import ast
+
+# Email system stored on static folder
+import static.python.emailingSystem as email
 
 app = Flask(__name__)
 
@@ -99,6 +103,30 @@ def output_visualization():
 
             return jsonify({'output': output})
     return redirect("/home")
+
+
+@app.route("/send-email", methods=["POST"])
+def send_email():
+    if request.is_json:
+        if request.method == "POST":
+            json_object =ast.literal_eval(request.data.decode("utf-8"))
+            to_addr = json_object.get("to_addr")
+            subject = json_object.get("subject")
+            encode_option = json_object.get("encode_option")
+            key = json_object.get("key")
+            message_body = json_object.get("message_body")
+
+
+            return jsonify({
+                "to_addr": to_addr,
+                "subject": subject,
+                "encode_option": encode_option,
+                "key": key,
+                "message_body":message_body 
+            })
+        return redirect("/home")
+
+
 
 
 @app.route("/register", methods=["POST"])
