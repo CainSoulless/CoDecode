@@ -1,33 +1,42 @@
 # SMTPLIB
 import smtplib
 
-# os
-import os
-
 # ssl for secure email system
 import ssl
 
+# decouple for sensitive data
+from decouple import config
 
-def send_email(to_addr, subject, body):
-    from_addr = os.environ.get("EMAIL_ADDR")
-    from_pass = os.environ.get("EMAIL_PASS")
-    print(from_pass)
+# EmailMessage
+from email.message import EmailMessage
 
-    message = f"""Form: {from_addr}
-        To: {to_addr}
-        Subject: {subject}
 
-        {body}
-        """
+EMAIL_ADDR = config("EMAIL_ADDR")
+EMAIL_PASS = config("EMAIL_PASS")
 
-    with smtplib.SMTP_SSL("smtp.gmail.com", 465, context = ssl.create_default_context()) as smpt:
-        try:
-            smpt.login(from_addr, from_pass)
-            print("Login success")
-            smpt.sendmail(from_addr, to_addr, message)
-            print("mail sended")
-        except:
-            print("Not possible")
-        return True
+if EMAIL_ADDR == None and EMAIL_PASS == None:
+    print("Cannot find email sender/password. Exit")
+    exit(1)
 
-send_email("rodrigotrickz@gmail.com", "test", "testing")
+
+def send_email(email_receiver, subject, message):
+    """
+    Receives all the needed information, wrap it into an email object and 
+    send it to the receiver email address.
+    """
+    body = f"""
+    {message}
+
+    sended with CoDecode.com
+    """
+
+    em = EmailMessage()
+    em["From"] = EMAIL_ADDR
+    em["To"] = email_receiver
+    em["Subject"] = subject
+    em.set_content(body)
+
+    context = ssl.create_default_context()
+    with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as smpt:
+        smpt.login(EMAIL_ADDR, EMAIL_PASS)
+        smpt.sendmail(EMAIL_ADDR, email_receiver, em.as_string())

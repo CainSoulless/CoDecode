@@ -6,7 +6,7 @@ $(document).ready(function() {
             type: "POST",
             contentType: "application/json",
             data: JSON.stringify({
-                message_body: $("#body").val(),
+                message: $("#body").val(),
                 encode_option: $("#encode-options option:selected").val()
             }),
             success: function(response) {
@@ -33,12 +33,11 @@ $(document).ready(function() {
             type: "POST",
             contentType: "application/json",
             data: JSON.stringify({
-                to_addr: $("#to_addr").val(),
+                email_receiver: $("#email_receiver").val(),
                 subject: $("#subject").val(),
                 encode_option: $("#encode-options option:selected").val(),
                 key: $("#key").val(),
-                message_body: $("#body").val()
-
+                message: $("#body").val()
             }),
         });
     }
@@ -46,7 +45,6 @@ $(document).ready(function() {
     $("#btn-send").click(function() {
         sendEmail();
     })
-
 
     $("#btn-output").click(function() {
         outputVisualization();

@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 """
 Autor: Rodrigo Hormazabal (aka CainSoulless)
 """
@@ -10,7 +12,6 @@ from flask import render_template
 from flask import request 
 from flask import session
 from flask_session import Session
-from tempfile import mkdtemp
 
 # Security
 from werkzeug.security import check_password_hash
@@ -93,13 +94,15 @@ def output_visualization():
     if request.is_json:
         if request.method == "POST":
             json_object = ast.literal_eval(request.data.decode("utf-8"))
-            message_body = json_object.get("message_body")
+            message = json_object.get("message")
             encode_option = json_object.get("encode_option")
 
             if encode_option == "base64":
-                output = encoders.enc_base64(message_body)
+                output = encoders.enc_base64(message)
             elif encode_option == "AES_EAX":
-                nonce, output, tag = encoders.enc_AES_EAX(message_body)
+                nonce, output, tag = encoders.enc_AES_EAX(message)
+
+            print(json_object)
 
             return jsonify({'output': output})
     return redirect("/home")
@@ -109,24 +112,30 @@ def output_visualization():
 def send_email():
     if request.is_json:
         if request.method == "POST":
-            json_object =ast.literal_eval(request.data.decode("utf-8"))
-            to_addr = json_object.get("to_addr")
+            json_object = ast.literal_eval(request.data.decode("utf-8"))
+            email_receiver = json_object.get("email_receiver")
             subject = json_object.get("subject")
             encode_option = json_object.get("encode_option")
             key = json_object.get("key")
-            message_body = json_object.get("message_body")
+            message = json_object.get("message")
+
+            print(json_object)
+
+            if encode_option == "base64":
+                output = encoders.enc_base64(message)
+            elif encode_option == "AES_EAX":
+                nonce, output, tag = encoders.enc_AES_EAX(message)
 
 
+            email.send_email(email_receiver, subject, output)
             return jsonify({
-                "to_addr": to_addr,
+                "email_receiver": email_receiver,
                 "subject": subject,
                 "encode_option": encode_option,
                 "key": key,
-                "message_body":message_body 
+                "message": message
             })
         return redirect("/home")
-
-
 
 
 @app.route("/register", methods=["POST"])
@@ -192,10 +201,3 @@ def logout():
 
 if __name__ == "__main__":
     app.run(debug=True)
-
-
-"""
-Things to do:
-Continuing with AJAX. (https://www.youtube.com/watch?v=nF9riePnm80)
-The boostrap was updated, so somethings were broke.
-"""
