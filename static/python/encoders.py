@@ -6,20 +6,17 @@ from Crypto.Cipher import AES
 from Crypto.Random import get_random_bytes
 from Crypto.Util.Padding import pad
 from Crypto.Protocol.KDF import PBKDF2
-
+# from flask import session
 
 def encode_option(encode_option, message):
 
     if encode_option == "Plain":
-        output = message
+        return message
     elif encode_option == "base64":
-        output = base64.b64encode(str.encode(message)).decode("utf-8")
+        return base64.b64encode(str.encode(message)).decode("utf-8")
     elif encode_option == "AES_EAX":
         nonce, output, tag = enc_AES_EAX(message)
-    # elif encode_option == "SHA-256":
-    #     enc_s
-
-    return output
+        return nonce, output, tag
 
 
 def random_key():
@@ -31,7 +28,10 @@ def enc_AES_EAX(message):
     nonce = cipher.nonce
     ciphered, tag = cipher.encrypt_and_digest(message.encode("ascii"))
     b64_ciphered = base64.b64encode(ciphered).decode("utf-8")
-    return nonce, b64_ciphered, tag
+    b64_nonce = base64.b64encode(nonce).decode("utf-8")
+    b64_tag = base64.b64encode(tag).decode("utf-8")
+
+    return b64_nonce, b64_ciphered, b64_tag
 
 
 """

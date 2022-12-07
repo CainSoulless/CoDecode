@@ -32,6 +32,11 @@ import ast
 # Email system stored on static folder
 import static.python.emailingSystem as email
 
+# Test
+from flask import send_file 
+
+
+
 app = Flask(__name__)
 
 app.config["TEMPLATES_AUTO_RELOAD"] = True
@@ -68,8 +73,6 @@ def home():
         "SHA-256",
         "AES_EAX"
     ] 
-
-
     return render_template("home.html", options=encoders_options, username=username["username"])
 
 
@@ -97,7 +100,10 @@ def output_visualization():
             message = json_object.get("message")
             encode_option = json_object.get("encode_option")
 
-            output = encoders.encode_option(encode_option, message)
+            if encode_option == "AES_EAX":
+                nonce, output, tag = encoders.encode_option(encode_option, message)
+            else:
+                output = encoders.encode_option(encode_option, message)
 
             return jsonify({'output': output})
     return redirect("/home")
@@ -114,7 +120,21 @@ def send_email():
             key = json_object.get("key")
             message = json_object.get("message")
 
-            output = encoders.encode_option(encode_option, message)
+            if encode_option == "AES_EAX":
+                nonce, output, tag = encoders.encode_option(encode_option, message)
+                path = f"static/files/{session['user_id']}-AES.txt"
+                # try:
+                with open(path, "w+") as file_EAX:
+                    content = f"{nonce}\n{tag}"
+                    file_EAX.write(content)
+                return send_file(path, as_attachment=True)
+                # except:
+                #     print("Not possible to create new file. Exit")
+                #     exit(2)
+            else:
+                output = encoders.encode_option(encode_option, message)
+
+
 
             email.send_email(email_receiver, subject, output)
             return jsonify({
@@ -145,7 +165,6 @@ def register():
         cursor.execute("INSERT INTO users (username, hash) VALUES (?, ?);", (username, generate_password_hash(password)))
         db.commit()
         return render_template("home.html")
-
 
 
 @app.route("/login", methods=["GET", "POST"])
