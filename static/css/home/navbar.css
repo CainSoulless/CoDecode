@@ -16,23 +16,15 @@
 .navbar__logged-as {
     display: flex !important;
     align-items: center;
-    margin-top: 1rem;
-    color: #0d6efd;
+    position: relative;
+    margin-right: 0rem !important;
 }
 
 .navbar-brand {
     font-size: 2rem !important;
 }
-/*    
-nav .navbar__nav li a{
-    margin-right: 2rem;
-    color: #9996A0;
-    text-decoration: none;
-    font-family: "Roboto", sans-serif;
-    font-weight: 500;
-    font-size: 1.5rem;
-    letter-spacing: 2px;
+
+.navbar {
+    --bs-navbar-color: rgba(255, 255, 255, 0.55) !important;
+    --bs-navbar-hover-color: rgba(255, 255, 255, 0.7) !important;
 }
-
-
-*/

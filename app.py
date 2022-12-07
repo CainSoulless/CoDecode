@@ -80,7 +80,7 @@ def key_generator():
     send it to the front-end without needes of refresh the web-page.
     """
     if request.is_json:
-        key_generator = encoders.get_random_bytes(32);
+        key_generator = encoders.random_key()
         key_generator = encoders.base64.b64encode(key_generator)
         return jsonify({'key_generator': key_generator.decode("utf-8")})
 
@@ -97,12 +97,7 @@ def output_visualization():
             message = json_object.get("message")
             encode_option = json_object.get("encode_option")
 
-            if encode_option == "base64":
-                output = encoders.enc_base64(message)
-            elif encode_option == "AES_EAX":
-                nonce, output, tag = encoders.enc_AES_EAX(message)
-
-            print(json_object)
+            output = encoders.encode_option(encode_option, message)
 
             return jsonify({'output': output})
     return redirect("/home")
@@ -119,13 +114,7 @@ def send_email():
             key = json_object.get("key")
             message = json_object.get("message")
 
-            print(json_object)
-
-            if encode_option == "base64":
-                output = encoders.enc_base64(message)
-            elif encode_option == "AES_EAX":
-                nonce, output, tag = encoders.enc_AES_EAX(message)
-
+            output = encoders.encode_option(encode_option, message)
 
             email.send_email(email_receiver, subject, output)
             return jsonify({

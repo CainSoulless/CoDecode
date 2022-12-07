@@ -1,5 +1,4 @@
 import base64
-import codecs
 from cryptography.fernet import Fernet
 
 # Testing
@@ -8,12 +7,24 @@ from Crypto.Random import get_random_bytes
 from Crypto.Util.Padding import pad
 from Crypto.Protocol.KDF import PBKDF2
 
-def enc_base64(message):
-    output = base64.b64encode(str.encode(message))
-    return output.decode("utf-8")
+
+def encode_option(encode_option, message):
+
+    if encode_option == "Plain":
+        output = message
+    elif encode_option == "base64":
+        output = base64.b64encode(str.encode(message)).decode("utf-8")
+    elif encode_option == "AES_EAX":
+        nonce, output, tag = enc_AES_EAX(message)
+    elif encode_option == "SHA-256":
+        enc_s
+
+    return output
 
 
-key = get_random_bytes(32)
+def random_key():
+    return get_random_bytes(32)
+
 
 def enc_AES_EAX(message):
     cipher = AES.new(key, AES.MODE_EAX)

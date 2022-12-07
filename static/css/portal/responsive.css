@@ -1,0 +1,41 @@
+@media screen and (max-width: 768px) {
+    .presentation {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    /* Container left */
+    .container__left {
+        width: 100%;
+
+    }
+
+    .presentation__title {
+        font-size: 3.3rem;
+    }
+    
+    .presentation__sub {
+        font-size: 3.3rem;
+        width: 100%;
+    }
+
+    .account__login {
+        margin-top: 2rem;
+    }
+
+    .container__right {
+        width: 100%;
+    }
+
+    .account__form{
+        width: 50% !important;
+    }
+
+    .account__title {
+        margin-top: 5rem;
+    }
+
+    /* .account__temp {
+        margin-top: 3rem;
+    } */
+}

@@ -14,7 +14,7 @@ from email.message import EmailMessage
 EMAIL_ADDR = config("EMAIL_ADDR")
 EMAIL_PASS = config("EMAIL_PASS")
 
-if EMAIL_ADDR == None and EMAIL_PASS == None:
+if EMAIL_ADDR == None or EMAIL_PASS == None:
     print("Cannot find email sender/password. Exit")
     exit(1)
 

@@ -6,12 +6,6 @@
     width: 11rem;
 }
 
-.message__output {
-    background-color: white !important;
-    cursor: default !important;
-    height: 30rem !important;
-    width: 100%!important;
-}
 
 .message__buttons {
     display: flex;
@@ -20,7 +14,16 @@
 }
 
 .message__textarea {
-    height: 25rem !important;
+    height: 20rem;
+    resize: none;
+}
+
+.message__output {
+    background-color: white !important;
+    cursor: default;
+    height: 38rem;
+    resize: none;
+    width: 100%;
 }
 
 .btn-dark {

@@ -1,3 +1,14 @@
 .form__key {
     display: flex;
+    gap: 1rem;
+}
+
+.form__key-text {
+    height: 2.5rem;
+    width: 50% !important;
+}
+
+.form__key-generate{
+    height: 2.5rem;
+    width: 50% !important;
 }

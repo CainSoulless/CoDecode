@@ -1,6 +1,6 @@
 flask
 flask_session
-tempfile
 pycryptodome
 secure-smtplib
 python-decouple
+python-dotenv

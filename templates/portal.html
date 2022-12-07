@@ -12,6 +12,7 @@
         <link href="static/css/portal/account/account__create.css" rel="stylesheet">
         <link href="static/css/portal/account/account__temp.css" rel="stylesheet">
         <link href="static/css/portal/account/account__login.css" rel="stylesheet">
+        <link href="static/css/portal/responsive.css" rel="stylesheet">
         <link href="static/css/style.css" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
         <!-- Bootstrap -->
@@ -55,13 +56,13 @@
                     <div class="account__create">
                         <h3 class="account__title">Create new account.</h3> 
                         <form class="account__form "  action="/register" method="post">
-                            <div class="w-50 account__create form-group">
+                            <div class="account__create form-group">
                                 <label for="username">Username:</label>
-                                <input class="account__username__class form-control w-50" autocomplete="off" type="text" name="username" id="username" placeholder="Username">
+                                <input class="account__username__class form-control" autocomplete="off" type="text" name="username" id="username" placeholder="Username">
                             </div>
-                            <div class="w-50 account__password form-group">
+                            <div class="account__password form-group">
                                 <label for="password">Password:</label>
-                                <input class="w-50 account__password__class form-control " autocomplete="off" type="password" name="password" id="password" placeholder="Password">
+                                <input class="account__password__class form-control " autocomplete="off" type="password" name="password" id="password" placeholder="Password">
                             </div>
                             <button class="account__submit btn btn-light" type="submit">Register</button>
                         </form>   

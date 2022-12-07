@@ -1,0 +1,14 @@
+@media screen and (max-width: 768px) {
+    .container__home {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .message__textarea {
+        height: 15rem !important;
+    }
+
+    .message__container {
+        width: 100% !important;
+    }
+}
