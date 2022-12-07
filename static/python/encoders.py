@@ -16,8 +16,8 @@ def encode_option(encode_option, message):
         output = base64.b64encode(str.encode(message)).decode("utf-8")
     elif encode_option == "AES_EAX":
         nonce, output, tag = enc_AES_EAX(message)
-    elif encode_option == "SHA-256":
-        enc_s
+    # elif encode_option == "SHA-256":
+    #     enc_s
 
     return output
 
@@ -27,7 +27,7 @@ def random_key():
 
 
 def enc_AES_EAX(message):
-    cipher = AES.new(key, AES.MODE_EAX)
+    cipher = AES.new(random_key(), AES.MODE_EAX)
     nonce = cipher.nonce
     ciphered, tag = cipher.encrypt_and_digest(message.encode("ascii"))
     b64_ciphered = base64.b64encode(ciphered).decode("utf-8")
