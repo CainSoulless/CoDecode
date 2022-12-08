@@ -27,6 +27,17 @@ $(document).ready(function() {
         })
     }
 
+    // function downloadFile() {
+    //     $.ajax( {
+    //         url: "/download",
+    //         type: "POST",
+    //         contentType: "application/json",
+    //         data: JSON.stringify({
+    //             message: $("#body").val()
+    //         }),
+    //     });
+    // }
+
     function sendEmail() {
         $.ajax( {
             url: "/send-email",
@@ -41,6 +52,10 @@ $(document).ready(function() {
             }),
         });
     }
+
+    // $("#btn-download").click(function() {
+    //     downloadFile();
+    // })
 
     $("#btn-send").click(function() {
         sendEmail();

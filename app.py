@@ -109,16 +109,14 @@ def output_visualization():
     return redirect("/home")
 
 
-@app.route("/download", methods=["GET"])
+@app.route("/download", methods=["POST", "GET"])
 def download_file():
-    if validate_file_user(session["user_id"]):
-        return send_from_directory("static/files", f"{session['user_id']}-AES.txt", as_attachment=True)
-    return render_template("home.html")
+    file_name = validate_file_user(session["user_id"])
+    return send_from_directory("static/files", file_name, as_attachment=True)
 
 
 @app.route("/send-email", methods=["POST", "GET"])
 def send_email():
-    send_from_directory("static/files", f"{session['user_id']}-AES.txt", )
     if request.is_json:
         if request.method == "POST":
             json_object = ast.literal_eval(request.data.decode("utf-8"))
@@ -133,7 +131,6 @@ def send_email():
                 create_file(nonce, tag, session["user_id"])
             else:
                 output = encoders.encode_option(encode_option, message)
-
 
             email.send_email(email_receiver, subject, output)
             return jsonify({

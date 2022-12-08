@@ -6,7 +6,7 @@ import random
 
 import sqlite3
 
-db = sqlite3.connect("../../database.db", check_same_thread=False)
+db = sqlite3.connect("database.db", check_same_thread=False)
 db.row_factory = sqlite3.Row
 cursor = db.cursor()
 
@@ -32,7 +32,6 @@ def create_file(nonce, tag, session_user_id):
         content = f"{nonce}\n{tag}"
         file_EAX.write(content)
         file_EAX.close()
-
     cursor.execute("INSERT INTO files_download (id_username, file_name) VALUES(?, ?);", (session_user_id, file_name))
     db.commit()
 
@@ -41,11 +40,10 @@ def validate_file_user(session_user_id):
     """
     Check if the current user has a file linked to download later.
     """
-    cursor.execute("SELECT * FROM files_download WHERE id_username = ?;", (session_user_id))
+    cursor.execute("SELECT file_name FROM files_download WHERE id_username = ? ORDER BY id DESC LIMIT 1;", (session_user_id, ))
     file_user = cursor.fetchone()
 
     if not file_user:
         print("file not found. Exit")
-        exit(5)
-
-    return file_user
+        return False
+    return file_user["file_name"]
