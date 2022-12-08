@@ -10,6 +10,7 @@ from flask import jsonify
 from flask import redirect
 from flask import render_template
 from flask import request 
+from flask import url_for 
 from flask import session
 from flask_session import Session
 
@@ -34,6 +35,7 @@ import static.python.emailingSystem as email
 
 # Test
 from flask import send_file 
+from flask import send_from_directory
 
 
 
@@ -109,8 +111,14 @@ def output_visualization():
     return redirect("/home")
 
 
-@app.route("/send-email", methods=["POST"])
+@app.route("/download", methods=["GET"])
+def download_file():
+    return send_from_directory("static/files", f"{session['user_id']}-AES.txt", as_attachment=True)
+
+
+@app.route("/send-email", methods=["POST", "GET"])
 def send_email():
+    send_from_directory("static/files", f"{session['user_id']}-AES.txt", )
     if request.is_json:
         if request.method == "POST":
             json_object = ast.literal_eval(request.data.decode("utf-8"))
@@ -122,18 +130,14 @@ def send_email():
 
             if encode_option == "AES_EAX":
                 nonce, output, tag = encoders.encode_option(encode_option, message)
-                path = f"static/files/{session['user_id']}-AES.txt"
-                # try:
-                with open(path, "w+") as file_EAX:
+                with open(f"static/files/{session['user_id']}-AES.txt", "w+") as file_EAX:
                     content = f"{nonce}\n{tag}"
                     file_EAX.write(content)
-                return send_file(path, as_attachment=True)
-                # except:
-                #     print("Not possible to create new file. Exit")
-                #     exit(2)
+                    file_EAX.close()
+
+                    # return redirect(url_for("download_file"))
             else:
                 output = encoders.encode_option(encode_option, message)
-
 
 
             email.send_email(email_receiver, subject, output)
