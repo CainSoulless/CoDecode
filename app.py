@@ -10,6 +10,7 @@ from flask import jsonify
 from flask import redirect
 from flask import render_template
 from flask import request 
+from flask import send_from_directory
 from flask import url_for 
 from flask import session
 from flask_session import Session
@@ -23,6 +24,8 @@ import sqlite3
 
 # helpers
 from static.python.helpers import login_required
+from static.python.helpers import create_file 
+from static.python.helpers import validate_file_user
 
 # Encoders
 import static.python.encoders as encoders
@@ -32,11 +35,6 @@ import ast
 
 # Email system stored on static folder
 import static.python.emailingSystem as email
-
-# Test
-from flask import send_file 
-from flask import send_from_directory
-
 
 
 app = Flask(__name__)
@@ -113,7 +111,9 @@ def output_visualization():
 
 @app.route("/download", methods=["GET"])
 def download_file():
-    return send_from_directory("static/files", f"{session['user_id']}-AES.txt", as_attachment=True)
+    if validate_file_user(session["user_id"]):
+        return send_from_directory("static/files", f"{session['user_id']}-AES.txt", as_attachment=True)
+    return render_template("home.html")
 
 
 @app.route("/send-email", methods=["POST", "GET"])
@@ -130,12 +130,7 @@ def send_email():
 
             if encode_option == "AES_EAX":
                 nonce, output, tag = encoders.encode_option(encode_option, message)
-                with open(f"static/files/{session['user_id']}-AES.txt", "w+") as file_EAX:
-                    content = f"{nonce}\n{tag}"
-                    file_EAX.write(content)
-                    file_EAX.close()
-
-                    # return redirect(url_for("download_file"))
+                create_file(nonce, tag, session["user_id"])
             else:
                 output = encoders.encode_option(encode_option, message)
 

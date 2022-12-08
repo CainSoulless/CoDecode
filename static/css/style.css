@@ -5,3 +5,8 @@
 .btn-light {
     background-color: #dedede !important;
 }
+
+a {
+    color: inherit !important;
+    text-decoration: inherit !important;
+}
