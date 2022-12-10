@@ -13,9 +13,6 @@ def encode_option(encode_option, message):
         return message
     elif encode_option == "base64":
         return base64.b64encode(str.encode(message)).decode("utf-8")
-    elif encode_option == "AES_EAX":
-        nonce, output, tag = enc_AES_EAX(message)
-        return nonce, output, tag
 
 
 def random_key():
@@ -50,9 +47,3 @@ Testing purposes. Don't delete until the code is passed to decoder.py
 # nonce, encoded, tag = enc_AES_EAX("Hola")
 # print(encoded)
 # print(dec_AES_EAX(nonce, encoded, tag))
-
-def encrypt(message):
-    key = Fernet.generate_key()
-    f = Fernet(key)
-    token = f.encrypt(message)
-    return token.decode("utf-8")

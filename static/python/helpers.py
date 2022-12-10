@@ -27,10 +27,26 @@ def login_required(f):
     return decorated_function
 
 
+def get_current_username():
+    cursor.execute("SELECT username FROM users WHERE id = ?;", (session["user_id"],))
+    username = cursor.fetchone()
+    return username[0]
+
+
+def options():
+    encoders_options = [
+        "Plain text",
+        "base64",
+        "SHA-256",
+        "AES_EAX"
+    ] 
+    return encoders_options
+
+
 def create_file(nonce, tag, session_user_id):
     random_number = str(random.randint(999,9999))
     file_name = random_number + ".txt"
-    with open(f"static/files/{file_name}", "w+") as file_EAX:
+    with open(f"static/files/downloads/{file_name}", "w+") as file_EAX:
         content = f"{nonce}\n{tag}"
         file_EAX.write(content)
         file_EAX.close()
@@ -49,3 +65,4 @@ def validate_file_user(session_user_id):
         print("file not found. Exit")
         return False
     return file_user["file_name"]
+

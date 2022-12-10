@@ -43,28 +43,29 @@ $(document).ready(function() {
         });
     }
 
-    // function sendEmail() {
-    //     $.ajax( {
-    //         url: "/send-email",
-    //         type: "POST",
-    //         contentType: "application/json",
-    //         data: JSON.stringify({
-    //             email_receiver: $("#email_receiver").val(),
-    //             subject: $("#subject").val(),
-    //             encode_option: $("#encode-options option:selected").val(),
-    //             key: $("#key").val(),
-    //             message: $("#body").val()
-    //         }),
-    //     });
-    // }
+    function decode() {
+        $.ajax( {
+            url: "/decoded",
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({
+                message: $("#body").val(),
+                encode_option: $("#encode-options option:selected").val(),
+                key: $("#key").val()
+            }),
+            success: function(response) {
+                $("#message_output").text(response.output)
+            },
+        });
+    }
 
     $("#btn-email-confirmed").click(function() {
         emailConfirmated();
     })
 
-    // $("#btn-send").click(function() {
-    //     sendEmail();
-    // })
+    $("#btn-decode").click(function() {
+        decode();
+    })
 
     $("#btn-output").click(function() {
         outputVisualization();

@@ -18,6 +18,7 @@ from flask_session import Session
 # Security
 from werkzeug.security import check_password_hash
 from werkzeug.security import generate_password_hash
+from werkzeug.utils import secure_filename
 
 # SQLITE3
 import sqlite3
@@ -26,9 +27,14 @@ import sqlite3
 from static.python.helpers import login_required
 from static.python.helpers import create_file 
 from static.python.helpers import validate_file_user
+from static.python.helpers import options 
+from static.python.helpers import get_current_username 
 
 # Encoders
 import static.python.encoders as encoders
+
+# Decoders
+import static.python.decoders as decoders
 
 # AST
 import ast
@@ -74,16 +80,12 @@ def home():
     """
     Render the home page where the user can send and/or encode the message.
     """
-    cursor.execute("SELECT username FROM users WHERE id = ?;", (session["user_id"],))
-    username = cursor.fetchone()
+    # cursor.execute("SELECT username FROM users WHERE id = ?;", (session["user_id"],))
+    # username = cursor.fetchone()
 
-    encoders_options = [
-        "Plain text",
-        "base64",
-        "SHA-256",
-        "AES_EAX"
-    ] 
-    return render_template("home.html", options=encoders_options, username=username["username"])
+    encoders_options = options()
+    username = get_current_username()
+    return render_template("home.html", options=encoders_options, username=username)
 
 
 @app.route("/key-generator", methods=["GET"])
@@ -236,6 +238,45 @@ def logout():
     """
     session.clear()
     return render_template("portal.html")
+
+
+@app.route("/decode", methods=["GET", "POST"])
+@login_required
+def decode():
+    encoders_options = options()
+    username = get_current_username()
+    return render_template("decode.html", options=encoders_options, username=username)
+
+
+@app.route("/decoded", methods=["GET", "POST"])
+@login_required
+def decoded():
+    if request.method == "POST":
+        if request.is_json:
+            json_object = ast.literal_eval(request.data.decode("utf-8"))
+            # json_object = request.data.decode("utf-8")
+            message = json_object.get("message")
+            encode_option = json_object.get("encode_option")
+            key = json_object.get("key")
+            print()
+            print(json_object)
+            print()
+
+            if encode_option == "AES_EAX":
+                # nonce, output, tag = decoders.dec_AES_EAX(message, key)
+                pass
+            else:
+                output = decoders.decode_option(encode_option, message)
+
+            return jsonify({'output': output})
+    return redirect("/decode")
+
+
+@app.route("/upload", methods=["GET", "POST"])
+def upload():
+    if request.method == "POST":
+
+        return render_template("decode.html")
 
 
 if __name__ == "__main__":
