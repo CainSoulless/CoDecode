@@ -1,15 +1,14 @@
 import base64
 from cryptography.fernet import Fernet
 
-# Testing
+# Crypto 
 from Crypto.Cipher import AES
 from Crypto.Random import get_random_bytes
 from Crypto.Util.Padding import pad
 from Crypto.Protocol.KDF import PBKDF2
-# from flask import session
+
 
 def encode_option(encode_option, message):
-
     if encode_option == "Plain":
         return message
     elif encode_option == "base64":
@@ -23,8 +22,8 @@ def random_key():
     return get_random_bytes(32)
 
 
-def enc_AES_EAX(message):
-    cipher = AES.new(random_key(), AES.MODE_EAX)
+def enc_AES_EAX(message, key):
+    cipher = AES.new(base64.b64decode(key), AES.MODE_EAX)
     nonce = cipher.nonce
     ciphered, tag = cipher.encrypt_and_digest(message.encode("ascii"))
     b64_ciphered = base64.b64encode(ciphered).decode("utf-8")

@@ -14,9 +14,10 @@
 }
 
 .navbar__logged-as {
+    width: 100% !important;
     display: flex !important;
     align-items: center;
-    position: relative;
+    position: relative !important;
     margin-right: 0rem !important;
 }
 

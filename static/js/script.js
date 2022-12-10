@@ -13,8 +13,8 @@ optionSelection.addEventListener("click", function() {
     if (value == "AES_EAX") {
         // Key generator
         document.getElementById("btn-generator").removeAttribute("disabled");
-        document.getElementById("btn-donwload").style.display = "flex";
-        document.getElementById("btn-confirm-send").style.display = "flex";
+        document.getElementById("btn-download").style.display = "flex";
+        document.getElementById("btn-email-confirmed").style.display = "flex";
 
         // Modal
         document.getElementById("modal-body").innerHTML = 
@@ -30,8 +30,8 @@ optionSelection.addEventListener("click", function() {
         // Modal
         document.getElementById("modal-body").innerHTML = 
             "Please confirm to send the email."
-        document.getElementById("btn-donwload").style.display = "none";
-        document.getElementById("btn-confirm-send").style.display = "flex";
+        document.getElementById("btn-download").style.display = "none";
+        document.getElementById("btn-email-confirmed").style.display = "flex";
     }
 })
 
@@ -41,6 +41,6 @@ if ((optionSelection.selectedIndex == "-1" ||
      body == "")) {
     document.getElementById("modal-body").innerHTML = 
         "Please fill all the needed options." 
-    document.getElementById("btn-donwload").style.display = "none";
-    document.getElementById("btn-confirm-send").style.display = "none";
+    document.getElementById("btn-download").style.display = "none";
+    document.getElementById("btn-email-confirmed").style.display = "none";
 } 

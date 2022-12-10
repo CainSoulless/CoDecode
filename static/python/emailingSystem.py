@@ -35,8 +35,17 @@ def send_email(email_receiver, subject, message):
     em["To"] = email_receiver
     em["Subject"] = subject
     em.set_content(body)
+    print()
+    print(EMAIL_ADDR)
+    print(EMAIL_PASS)
+    print()
 
     context = ssl.create_default_context()
-    with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as smpt:
-        smpt.login(EMAIL_ADDR, EMAIL_PASS)
-        smpt.sendmail(EMAIL_ADDR, email_receiver, em.as_string())
+    with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as smtp:
+        try:
+            smtp.login(EMAIL_ADDR, EMAIL_PASS)
+            smtp.sendmail(EMAIL_ADDR, email_receiver, em.as_string())
+        except smtplib.SMTPAuthenticationError:
+            print("Something goes wrong with email login.")
+        except smtplib.SMTPRecipientsRefused:
+            print("Recipient not valid/found.")

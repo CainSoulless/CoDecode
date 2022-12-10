@@ -4,7 +4,9 @@ from functools  import wraps
 # File naming purposes.
 import random
 
+# Database communication
 import sqlite3
+
 
 db = sqlite3.connect("database.db", check_same_thread=False)
 db.row_factory = sqlite3.Row

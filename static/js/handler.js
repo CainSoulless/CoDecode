@@ -7,7 +7,8 @@ $(document).ready(function() {
             contentType: "application/json",
             data: JSON.stringify({
                 message: $("#body").val(),
-                encode_option: $("#encode-options option:selected").val()
+                encode_option: $("#encode-options option:selected").val(),
+                key: $("#key").val()
             }),
             success: function(response) {
                 $("#message_output").text(response.output)
@@ -27,20 +28,9 @@ $(document).ready(function() {
         })
     }
 
-    // function downloadFile() {
-    //     $.ajax( {
-    //         url: "/download",
-    //         type: "POST",
-    //         contentType: "application/json",
-    //         data: JSON.stringify({
-    //             message: $("#body").val()
-    //         }),
-    //     });
-    // }
-
-    function sendEmail() {
+    function emailConfirmated() {
         $.ajax( {
-            url: "/send-email",
+            url: "/email-confirmated",
             type: "POST",
             contentType: "application/json",
             data: JSON.stringify({
@@ -53,13 +43,28 @@ $(document).ready(function() {
         });
     }
 
-    // $("#btn-download").click(function() {
-    //     downloadFile();
-    // })
+    // function sendEmail() {
+    //     $.ajax( {
+    //         url: "/send-email",
+    //         type: "POST",
+    //         contentType: "application/json",
+    //         data: JSON.stringify({
+    //             email_receiver: $("#email_receiver").val(),
+    //             subject: $("#subject").val(),
+    //             encode_option: $("#encode-options option:selected").val(),
+    //             key: $("#key").val(),
+    //             message: $("#body").val()
+    //         }),
+    //     });
+    // }
 
-    $("#btn-send").click(function() {
-        sendEmail();
+    $("#btn-email-confirmed").click(function() {
+        emailConfirmated();
     })
+
+    // $("#btn-send").click(function() {
+    //     sendEmail();
+    // })
 
     $("#btn-output").click(function() {
         outputVisualization();

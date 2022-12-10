@@ -36,6 +36,16 @@ import ast
 # Email system stored on static folder
 import static.python.emailingSystem as email
 
+# Enviroment variables.
+from decouple import config
+
+
+EMAIL_ADDR = config("EMAIL_ADDR")
+EMAIL_PASS = config("EMAIL_PASS")
+if not EMAIL_ADDR or not EMAIL_PASS:
+    print("Not possible to find environment variables")
+    exit(6)
+
 
 app = Flask(__name__)
 
@@ -77,6 +87,7 @@ def home():
 
 
 @app.route("/key-generator", methods=["GET"])
+@login_required
 def key_generator():
     """
     Receive an ajax object from handler.js, then generate a random key and
@@ -89,6 +100,7 @@ def key_generator():
 
 
 @app.route("/output-visualization", methods=["POST"])
+@login_required
 def output_visualization():
     """
     This is the request an render ajax object sended from Jquery, receive the body and the
@@ -99,9 +111,10 @@ def output_visualization():
             json_object = ast.literal_eval(request.data.decode("utf-8"))
             message = json_object.get("message")
             encode_option = json_object.get("encode_option")
+            key = json_object.get("key")
 
             if encode_option == "AES_EAX":
-                nonce, output, tag = encoders.encode_option(encode_option, message)
+                nonce, output, tag = encoders.enc_AES_EAX(message, key)
             else:
                 output = encoders.encode_option(encode_option, message)
 
@@ -110,37 +123,59 @@ def output_visualization():
 
 
 @app.route("/download", methods=["POST", "GET"])
+@login_required
 def download_file():
     file_name = validate_file_user(session["user_id"])
     return send_from_directory("static/files", file_name, as_attachment=True)
 
 
-@app.route("/send-email", methods=["POST", "GET"])
-def send_email():
+@app.route("/email-confirmated", methods=["POST"])
+def email_confirmated():
     if request.is_json:
-        if request.method == "POST":
-            json_object = ast.literal_eval(request.data.decode("utf-8"))
-            email_receiver = json_object.get("email_receiver")
-            subject = json_object.get("subject")
-            encode_option = json_object.get("encode_option")
-            key = json_object.get("key")
-            message = json_object.get("message")
+        json_object = ast.literal_eval(request.data.decode("utf-8"))
+        email_receiver = json_object.get("email_receiver")
+        subject = json_object.get("subject")
+        encode_option = json_object.get("encode_option")
+        key = json_object.get("key")
+        message = json_object.get("message")
 
-            if encode_option == "AES_EAX":
-                nonce, output, tag = encoders.encode_option(encode_option, message)
-                create_file(nonce, tag, session["user_id"])
-            else:
-                output = encoders.encode_option(encode_option, message)
+        if encode_option == "AES_EAX":
+            nonce, output, tag = encoders.enc_AES_EAX(message, key)
+            create_file(nonce, tag, session["user_id"])
+        else:
+            output = encoders.encode_option(encode_option, message)
 
-            email.send_email(email_receiver, subject, output)
-            return jsonify({
-                "email_receiver": email_receiver,
-                "subject": subject,
-                "encode_option": encode_option,
-                "key": key,
-                "message": message
-            })
-        return redirect("/home")
+        email.send_email(email_receiver, subject, output)
+        return render_template("home.html")
+
+
+@app.route("/send-email", methods=["POST", "GET"])
+@login_required
+def send_email():
+    # if request.is_json:
+    #     if request.method == "POST":
+    #         json_object = ast.literal_eval(request.data.decode("utf-8"))
+    #         email_receiver = json_object.get("email_receiver")
+    #         subject = json_object.get("subject")
+    #         encode_option = json_object.get("encode_option")
+    #         key = json_object.get("key")
+    #         message = json_object.get("message")
+
+    #         if encode_option == "AES_EAX":
+    #             nonce, output, tag = encoders.enc_AES_EAX(message, key)
+    #             create_file(nonce, tag, session["user_id"])
+    #         else:
+    #             output = encoders.encode_option(encode_option, message)
+
+    #         return jsonify({
+    #             "email_receiver": email_receiver,
+    #             "subject": subject,
+    #             "encode_option": encode_option,
+    #             "key": key,
+    #             "message": message
+    #         })
+    # return redirect("/home")
+    pass
 
 
 @app.route("/register", methods=["POST"])
