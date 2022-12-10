@@ -274,7 +274,16 @@ def decoded():
 
 @app.route("/upload", methods=["GET", "POST"])
 def upload():
+    print()
+    print(1)
+    print()
     if request.method == "POST":
+        if request.is_json:
+            # files = request.files.get("")
+            json_object = ast.literal_eval(request.data.decode("utf-8"))
+            print()
+            print(json_object)
+            print()
 
         return render_template("decode.html")
 

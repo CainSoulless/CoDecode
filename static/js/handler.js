@@ -14,7 +14,7 @@ $(document).ready(function() {
                 $("#message_output").text(response.output)
             }
         })
-    }
+    };
 
     function keyGenerator() {
         $.ajax( {
@@ -26,7 +26,7 @@ $(document).ready(function() {
                 $("#key").val(response.key_generator)
             }
         })
-    }
+    };
 
     function emailConfirmated() {
         $.ajax( {
@@ -41,7 +41,7 @@ $(document).ready(function() {
                 message: $("#body").val()
             }),
         });
-    }
+    };
 
     function decode() {
         $.ajax( {
@@ -57,13 +57,32 @@ $(document).ready(function() {
                 $("#message_output").text(response.output)
             },
         });
-    }
+    };
+
+    function upload() {
+        $.ajax( {
+            url: "/upload",
+            type: "POST",
+            cache: false,
+            contentType: false,
+            processData: false,
+            data: form_data,
+            dataType: "json",
+            success: function(response) {
+                console.log("success");
+            }
+        });
+    };
+
 
     $("#btn-email-confirmed").click(function() {
         emailConfirmated();
     })
 
     $("#btn-decode").click(function() {
+        // var form_data = new FormData();
+        // alert(JSON.stringify(form_data))
+        upload();
         decode();
     })
 

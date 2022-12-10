@@ -44,3 +44,10 @@ if ((optionSelection.selectedIndex == "-1" ||
     document.getElementById("btn-download").style.display = "none";
     document.getElementById("btn-email-confirmed").style.display = "none";
 } 
+
+$(document).ready(function (e) {
+    $("#btn-decode").on("click", function() {
+        console.log(1);
+        var form_data = new FormData();
+    });
+});
