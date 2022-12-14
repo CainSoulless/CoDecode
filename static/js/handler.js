@@ -45,13 +45,15 @@ $(document).ready(function() {
 
     function decode() {
         $.ajax( {
-            url: "/decoded",
+            url: "/decode",
             type: "POST",
             contentType: "application/json",
             data: JSON.stringify({
                 message: $("#body").val(),
                 encode_option: $("#encode-options option:selected").val(),
-                key: $("#key").val()
+                key: $("#key").val(),
+                line1: $("#key-line-1").val(),
+                line2: $("#key-line-2").val()
             }),
             success: function(response) {
                 $("#message_output").text(response.output)
@@ -59,30 +61,11 @@ $(document).ready(function() {
         });
     };
 
-    function upload() {
-        $.ajax( {
-            url: "/upload",
-            type: "POST",
-            cache: false,
-            contentType: false,
-            processData: false,
-            data: form_data,
-            dataType: "json",
-            success: function(response) {
-                console.log("success");
-            }
-        });
-    };
-
-
     $("#btn-email-confirmed").click(function() {
         emailConfirmated();
     })
 
     $("#btn-decode").click(function() {
-        // var form_data = new FormData();
-        // alert(JSON.stringify(form_data))
-        upload();
         decode();
     })
 
