@@ -243,9 +243,24 @@ def logout():
 @app.route("/decode", methods=["GET", "POST"])
 @login_required
 def decode():
-    encoders_options = options()
-    username = get_current_username()
-    return render_template("decode.html", options=encoders_options, username=username)
+    if request.method == "GET":
+        encoders_options = options()
+        username = get_current_username()
+        return render_template("decode.html", options=encoders_options, username=username)
+    if request.method == "POST":
+        json_object = ast.literal_eval(request.data.decode("utf-8"))
+        message = json_object.get("message")
+        encode_option = json_object.get("encode_option")
+        key = json_object.get("key")
+        line1 = json_object.get("line1")
+        line2 = json_object.get("line2")
+
+        if encode_option == "AES_EAX":
+            output = decoders.dec_AES_EAX(message, key, line1, line2)
+            pass
+        else:
+            output = decoders.decode_option(encode_option, message)
+        return jsonify({'output': output})
 
 
 @app.route("/decoded", methods=["GET", "POST"])
@@ -254,13 +269,9 @@ def decoded():
     if request.method == "POST":
         if request.is_json:
             json_object = ast.literal_eval(request.data.decode("utf-8"))
-            # json_object = request.data.decode("utf-8")
             message = json_object.get("message")
             encode_option = json_object.get("encode_option")
             key = json_object.get("key")
-            print()
-            print(json_object)
-            print()
 
             if encode_option == "AES_EAX":
                 # nonce, output, tag = decoders.dec_AES_EAX(message, key)
@@ -270,13 +281,6 @@ def decoded():
 
             return jsonify({'output': output})
     return redirect("/decode")
-
-
-@app.route("/upload", methods=["GET", "POST"])
-def upload():
-    if request.method == "POST":
-
-        return render_template("decode.html")
 
 
 if __name__ == "__main__":

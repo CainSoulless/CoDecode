@@ -14,7 +14,7 @@ $(document).ready(function() {
                 $("#message_output").text(response.output)
             }
         })
-    }
+    };
 
     function keyGenerator() {
         $.ajax( {
@@ -26,7 +26,7 @@ $(document).ready(function() {
                 $("#key").val(response.key_generator)
             }
         })
-    }
+    };
 
     function emailConfirmated() {
         $.ajax( {
@@ -41,23 +41,25 @@ $(document).ready(function() {
                 message: $("#body").val()
             }),
         });
-    }
+    };
 
     function decode() {
         $.ajax( {
-            url: "/decoded",
+            url: "/decode",
             type: "POST",
             contentType: "application/json",
             data: JSON.stringify({
                 message: $("#body").val(),
                 encode_option: $("#encode-options option:selected").val(),
-                key: $("#key").val()
+                key: $("#key").val(),
+                line1: $("#key-line-1").val(),
+                line2: $("#key-line-2").val()
             }),
             success: function(response) {
                 $("#message_output").text(response.output)
             },
         });
-    }
+    };
 
     $("#btn-email-confirmed").click(function() {
         emailConfirmated();

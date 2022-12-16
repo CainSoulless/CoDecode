@@ -9,14 +9,15 @@ optionSelection.addEventListener("click", function() {
     // Option
     var encodeOption = document.getElementById("encode-options");
     var value = encodeOption.options[encodeOption.selectedIndex].text;
+    console.log(value);
 
     if (value == "AES_EAX") {
         // Key generator
         document.getElementById("btn-generator").removeAttribute("disabled");
-        document.getElementById("btn-download").style.display = "flex";
-        document.getElementById("btn-email-confirmed").style.display = "flex";
 
         // Modal
+        document.getElementById("btn-download").style.display = "flex";
+        document.getElementById("btn-email-confirmed").style.display = "flex";
         document.getElementById("modal-body").innerHTML = 
             "Remeber: The AES_EAX decryption needs 2 things, your key and the file " + 
             "with download option below. The person who want to decrypt the email " + 
@@ -35,10 +36,11 @@ optionSelection.addEventListener("click", function() {
     }
 })
 
-var body = document.getElementById('body')
+let body = document.getElementById('body')
+let email = document.getElementById('email_receiver')
 
 if ((optionSelection.selectedIndex == "-1" || 
-     body == "")) {
+     body == "" || email == "")) {
     document.getElementById("modal-body").innerHTML = 
         "Please fill all the needed options." 
     document.getElementById("btn-download").style.display = "none";
