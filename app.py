@@ -152,43 +152,44 @@ def output_visualization():
 #         return render_template("home.html")
 
 # TODO: Test this function or try another way to download the file. 
-@app.route("/download", methods=["POST", "GET"])
-def download_file():
-    file_name = validate_file_user(session["user_id"])
-    return send_from_directory("static/files", file_name, as_attachment=True)
+@app.route("/download", methods=["GET"])
+def download():
+    filename = validate_file_user(session["user_id"])
+    print()
+    print(2)
+    print()
+    return send_from_directory("static/files", filename, mimetype="text/plain", as_attachment=True)
+
+
+@app.route("/test")
+def test():
+    return "Test"
 
 
 @app.route("/send-email", methods=["POST", "GET"])
 @login_required
 def send_email():
-    if request.is_json:
-        if request.method == "POST":
-            json_object = ast.literal_eval(request.data.decode("utf-8"))
-            email_receiver = json_object.get("email_receiver")
-            subject = json_object.get("subject")
-            encode_option = json_object.get("encode_option")
-            key = json_object.get("key")
-            message = json_object.get("message")
+    if request.method == "POST":
+        json_object = ast.literal_eval(request.data.decode("utf-8"))
+        email_receiver = json_object.get("email_receiver")
+        subject = json_object.get("subject")
+        encode_option = json_object.get("encode_option")
+        key = json_object.get("key")
+        message = json_object.get("message")
 
-            if encode_option == "AES_EAX":
-                nonce, output, tag = encoders.enc_AES_EAX(message, key)
-                create_file(nonce, tag, session["user_id"])
-                file_name = validate_file_user(session["user_id"])
-                # with open(f"static/files/{file_name}", "rb") as r:
-                    # file = r.read()
+        if encode_option == "AES_EAX":
+            nonce, output, tag = encoders.enc_AES_EAX(message, key)
+            create_file(nonce, tag, session["user_id"])
+            print()
+            print(1)
+            print()
+            filename = validate_file_user(session["user_id"])
+            return send_from_directory("static/files", filename, mimetype="text/plain", as_attachment=True)
+        else:
+            output = encoders.encode_option(encode_option, message)
 
-                    # binary_file = bytes(file)
-                print()
-                print(1)
-                print()
-                    # return send_file(r)
-                return send_from_directory("static/files", file_name, as_attachment=True)
-            else:
-                output = encoders.encode_option(encode_option, message)
-
-            email.send_email(email_receiver, subject, output)
-            # return response
-    return redirect("/home")
+        email.send_email(email_receiver, subject, output)
+    return redirect("/test")
 
 
 @app.route("/register", methods=["POST"])
