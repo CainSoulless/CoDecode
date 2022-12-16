@@ -12,29 +12,33 @@ def decode_option(encode_option, message):
         return base64.b64decode(str.encode(message)).decode("utf-8")
 
 
-# def dec_AES_EAX(message, key, nonce, tag):
-#     message = base64.b64decode(message)
-#     cipher = AES.new(key, AES.MODE_EAX, nonce=nonce)
-#     plain = cipher.decrypt(ciphered)
-#     try:
-#         cipher.verify(tag)
-#         return plain.decode("ascii")
-#     except:
-#         return False
-
-
-
-
-# def decc_AES_EAX(message, key):
 def dec_AES_EAX(message, key, nonce, tag):
-    cipher = AES.new(base64.b64decode(key), AES.MODE_EAX)
-    nonce = cipher.nonce
-    ciphered, tag = cipher.encrypt_and_digest(message.encode("ascii"))
-    b64_ciphered = base64.b64encode(ciphered).decode("utf-8")
-    b64_nonce = base64.b64encode(nonce).decode("utf-8")
-    b64_tag = base64.b64encode(tag).decode("utf-8")
+    message = base64.b64decode(message)
+    key = base64.b64decode(key)
+    nonce = base64.b64decode(nonce)
+    tag = base64.b64decode(tag)
+    print(message, key, nonce, tag)
 
-    return b64_nonce, b64_ciphered, b64_tag
+    cipher = AES.new(key, AES.MODE_EAX, nonce=nonce)
+    plain = cipher.decrypt(message)
+    # try:
+    cipher.verify(tag)
+    return plain.decode("ascii")
+    # except:
+    #     return False
 
 
-# print(dec_AES_EAX())
+
+
+# def dec_AES_EAX(message, key, nonce, tag):
+#     cipher = AES.new(base64.b64decode(key), AES.MODE_EAX)
+#     nonce = cipher.nonce
+#     ciphered, tag = cipher.encrypt_and_digest(message.encode("ascii"))
+#     b64_ciphered = base64.b64encode(ciphered).decode("utf-8")
+#     b64_nonce = base64.b64encode(nonce).decode("utf-8")
+#     b64_tag = base64.b64encode(tag).decode("utf-8")
+
+#     return b64_nonce, b64_ciphered, b64_tag
+
+
+# print(dec_AES_EAX("9uELnjgVxx4=", "yWf+Hiik/e7KVP6ztkMavn5NIqCihigHnYvRI1p1w3U=", "KhcBBqE/ZBfmrCeq/hmaoA==", "gU5BuZhnJDr8P0/yjmIWJQ=="))

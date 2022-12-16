@@ -46,7 +46,7 @@ def options():
 def create_file(nonce, tag, session_user_id):
     random_number = str(random.randint(999,9999))
     file_name = random_number + ".txt"
-    with open(f"static/files/downloads/{file_name}", "w+") as file_EAX:
+    with open(f"static/files/{file_name}", "w+") as file_EAX:
         content = f"{nonce}\n{tag}"
         file_EAX.write(content)
         file_EAX.close()

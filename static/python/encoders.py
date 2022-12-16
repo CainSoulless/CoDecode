@@ -42,8 +42,8 @@ Testing purposes. Don't delete until the code is passed to decoder.py
 #         return plain.decode("ascii")
 #     except:
 #         return False
-#
-#
+
+
 # nonce, encoded, tag = enc_AES_EAX("Hola")
 # print(encoded)
 # print(dec_AES_EAX(nonce, encoded, tag))
