@@ -65,4 +65,3 @@ def validate_file_user(session_user_id):
         print("file not found. Exit")
         return False
     return file_user["file_name"]
-
