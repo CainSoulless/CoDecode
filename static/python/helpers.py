@@ -1,4 +1,8 @@
-from flask import session, redirect
+# Flask
+from flask import session
+from flask import redirect
+from flask import render_template 
+
 from functools  import wraps
 
 # File naming purposes.
@@ -11,6 +15,21 @@ import sqlite3
 db = sqlite3.connect("database.db", check_same_thread=False)
 db.row_factory = sqlite3.Row
 cursor = db.cursor()
+
+
+def apology(message, code=400):
+    """Render message as an apology to user."""
+    def escape(s):
+        """
+        Escape special characters.
+
+        https://github.com/jacebrowning/memegen#special-characters
+        """
+        for old, new in [("-", "--"), (" ", "-"), ("_", "__"), ("?", "~q"),
+                            ("%", "~p"), ("#", "~h"), ("/", "~s"), ("\"", "''")]:
+            s = s.replace(old, new)
+        return s
+    return render_template("apology.html", top=code, bottom=escape(message)), code
 
 
 def login_required(f):
@@ -37,7 +56,6 @@ def options():
     encoders_options = [
         "Plain text",
         "base64",
-        "SHA-256",
         "AES_EAX"
     ] 
     return encoders_options

@@ -1,4 +1,5 @@
 flask_session/
 static/files/
+static/python/test.py
 __pycache__/
 .env
