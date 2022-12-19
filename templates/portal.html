@@ -38,10 +38,10 @@
                             <h3 class="account__login--title">Login.</h3> 
                             <div class="account__login--form w-100">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="username" name="username" autofocus placeholder="Username">
+                                    <input type="text" class="form-control" id="username" name="username" autofocus placeholder="Username" required>
                                 </div>
                                 <div class="form-group">
-                                    <input type="password" class="form-control" id="pwd" name="password" placeholder="Passoword">
+                                    <input type="password" class="form-control" id="pwd" name="password" placeholder="Passoword" required>
                                 </div>
                             </div>
                                 
@@ -58,11 +58,11 @@
                         <form class="account__form "  action="/register" method="post">
                             <div class="account__create form-group">
                                 <label for="username">Username:</label>
-                                <input class="account__username__class form-control" autocomplete="off" type="text" name="username" id="username" placeholder="Username">
+                                <input class="account__username__class form-control" autocomplete="off" type="text" name="username" id="username" placeholder="Username" required>
                             </div>
                             <div class="account__password form-group">
                                 <label for="password">Password:</label>
-                                <input class="account__password__class form-control " autocomplete="off" type="password" name="password" id="password" placeholder="Password">
+                                <input class="account__password__class form-control " autocomplete="off" type="password" name="password" id="password" placeholder="Password" required pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?!.*[ !@#$%^&*_=+-]).{6,12}$" title="At least 6 characters, 12 maximum, must contain one lower case, one upper case, one number and no one special characters.">
                             </div>
                             <button class="account__submit btn btn-light" type="submit">Register</button>
                         </form>   
@@ -93,9 +93,6 @@
                         ...
                         </div>
                         <div class="modal-footer">
-                        <!-- <button type="button" class="btn btn-secondary" id="btn-download"><a href="{{ url_for('download') }}">Download</a></button>
-                            
-                        <button type="button" class="btn btn-dark" id="btn-email-confirmed" data-bs-dismiss="modal"><a href="{{ url_for('send_email') }}">Send</button> -->
                         </div>
                     </div>
                 </div>
