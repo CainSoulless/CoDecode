@@ -27,12 +27,10 @@ requests, renders, logins, security, and user input sanitization.
 # Flask
 from flask import Flask
 from flask import jsonify
-from flask import make_response
 from flask import redirect
 from flask import render_template
 from flask import request
 from flask import send_from_directory
-from flask import send_file
 from flask import session
 from flask import url_for
 from flask_session import Session
@@ -45,12 +43,12 @@ from werkzeug.security import generate_password_hash
 import sqlite3
 
 # helpers
-from static.python.helpers import apology
-from static.python.helpers import create_file
-from static.python.helpers import get_current_username
-from static.python.helpers import login_required
-from static.python.helpers import options
-from static.python.helpers import validate_file_user
+from static.python.utils import apology
+from static.python.utils import create_file
+from static.python.utils import get_current_username
+from static.python.utils import login_required
+from static.python.utils import options
+from static.python.utils import validate_file_user
 
 # Encoders
 import static.python.encoders as encoders
@@ -82,7 +80,7 @@ app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
-db = sqlite3.connect("database.db", check_same_thread=False)
+db = sqlite3.connect("./static/db/database.db", check_same_thread=False)
 db.row_factory = sqlite3.Row
 cursor = db.cursor()
 
